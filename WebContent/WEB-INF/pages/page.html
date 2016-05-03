@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8"/>
+<!-- 
+{"endRow": 10,
+  "firstPage": 1,
+  "hasNextPage": true,
+  "hasPreviousPage": false,
+  "isFirstPage": true,
+  "isLastPage": false,
+  "lastPage": 8,
+  "list": [
+    {"id": "2",
+      "pwd": "333222",
+      "username": "小刚"},...
+  ],"navigatePages": 8,"navigatepageNums": [
+    1,2,3,4,5,6,7,8],
+  "nextPage": 2,
+  "pageNum": 1,
+  "pageSize": 10,
+  "pages": 820,
+  "prePage": 0,
+  "size": 10,
+  "startRow": 1,
+  "total": 8192
+}
+ -->
+ <style>
+table.gridtable {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    margin: 5px auto;
+}
+
+table.gridtable th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+
+table.gridtable td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+ </style>
+ <head><title>Mybatis PageHelper 分页实例</title></head>
+ <center><h3>Mybatis PageHelper 分页实例</h3><span style="float: right;margin-right: 280px;">by mg . 2016-05-03</span> </center>
+ <br/>
+ <#if page??>
+ 	<table class="gridtable" style="width:60%;">
+        <tr>
+            <th colspan="2">分页信息</th>
+        </tr>
+        <tr>
+            <th style="width: 300px;">当前页号</th>
+            <td>${page.pageNum!}</td>
+        </tr>
+        <tr>
+            <th>页面大小</th>
+            <td>${page.pageSize!}</td>
+        </tr>
+        <tr>
+            <th>起始行号(>=)</th>
+            <td>${page.startRow!}</td>
+        </tr>
+        <tr>
+            <th>终止行号(<=)</th>
+            <td>${page.endRow!}</td>
+        </tr>
+        <tr>
+            <th>总结果数</th>
+            <td>${page.total!}</td>
+        </tr>
+        <tr>
+            <th>总页数</th>
+            <td>${page.pages!}</td>
+        </tr>
+        <tr>
+            <th>第一页</th>
+            <td>${page.firstPage!}</td>
+        </tr>
+        <tr>
+            <th>前一页</th>
+            <td>${page.prePage!}</td>
+        </tr>
+        <tr>
+            <th>下一页</th>
+            <td>${page.nextPage!}</td>
+        </tr>
+        <tr>
+            <th>最后一页</th>
+            <td>${page.lastPage!}</td>
+        </tr>
+    </table>
+ 	<table class="gridtable" style="width:60%;text-align: center;">
+ 		<tr>
+ 			<th>id</th>
+ 			<th>姓名</th>
+ 			<th>密码</th>
+ 		</tr>
+	 	<#list page.list as demo>
+	 		<tr>
+		 		<td>${demo.id}</td>
+	 			<td>${demo.username}</td>
+	 			<td>${demo.pwd}</td>
+	 		</tr>
+	 	</#list>
+ 	</table>
+ 	<table class="gridtable" style="width:60%;text-align: center;">
+        <tr>
+            <#if page.hasPreviousPage == true>
+                <td><a href="${ROOT}/test.do/toPage?pageNum=${page.prePage}&pageSize=${page.pageSize}">前一页</a></td>
+           	</#if>
+            <#list page.navigatepageNums as nav>
+                <#if nav == page.pageNum>
+                    <td style="font-weight: bold;">${nav}</td>
+                </#if>
+                <#if nav != page.pageNum>
+                    <td><a href="${ROOT}/test.do/toPage?pageNum=${nav}&pageSize=${page.pageSize}">${nav}</a></td>
+                </#if>
+            </#list>
+            <#if page.hasNextPage == true>
+                <td><a href="${ROOT}/test.do/toPage?pageNum=${page.nextPage}&pageSize=${page.pageSize}">下一页</a></td>
+            </#if>
+        </tr>
+    </table>
+ </#if>
+ <div style="margin-bottom: 20px;"></div>

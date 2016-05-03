@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 实现basedao的实现类，提供常用的dao层方法
@@ -64,6 +69,12 @@ public class BaseDaoImpl<T> extends BaseDao{
 		session.select(id, p, sh);
 		session.close();
 		return sh.getValue();
+	}
+	
+	public PageInfo<T> selectPage(String id,Object p,HttpServletRequest req){
+		PageHelper.startPage(req);
+		List<T> list = this.selectList(id, p);
+		return new PageInfo<T>(list);
 	}
 	
 	private String uuid(){

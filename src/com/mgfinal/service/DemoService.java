@@ -3,6 +3,9 @@ package com.mgfinal.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.github.pagehelper.PageInfo;
 import com.mgfinal.dao.DemoDao;
 import com.mgfinal.vo.Demo;
 
@@ -36,5 +39,9 @@ public class DemoService {
 
 	public String showString(String id) {
 		return this.demoDao.selectForString("com.mgfinal.vo.Demo.showString", id);
+	}
+
+	public PageInfo<Demo> selectPage(HttpServletRequest request) {
+		return this.demoDao.selectPage("com.mgfinal.vo.Demo.showAll", null, request);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.mgfinal.service.DemoService;
 import com.mgfinal.vo.Demo;
 
@@ -53,5 +55,13 @@ public class TestAction extends MGWorkServlet{
 		this.setAttr("name", name);
 		return "index";
 	}
+	
+	public String toPage(){
+		PageInfo<Demo> page = demoService.selectPage(request);
+		this.setAttr("page", page);
+		System.out.println(JSONObject.toJSONString(page));
+		return "page";
+	}
+	
 
 }
