@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8"/>
+<a href="${ROOT}/test.do/selectOne">测试mybatis (selectOne)</a><br/>
+<#if demo??>
+	${demo.id} --> ${demo.username} --> ${demo.pwd}
+</#if>
+<br/>
+<a href="${ROOT}/test.do/selectList">测试mybatis (selectList)</a><br/>
+<#if dList??>
+	<#list dList as demo>
+	${demo.id} --> ${demo.username} --> ${demo.pwd}<br/>
+	</#list>
+</#if>
+<br/>
+<a href="${ROOT}/test.do/selectMap">测试mybatis (selectMap)</a><br/>
+<#if map??>
+	${map.id} --> ${map.username} --> ${map.pwd}
+</#if>
+<br/>
+<a href="${ROOT}/test.do/selectListMap">测试mybatis (selectListMap)</a><br/>
+<#if mapList??>
+	<#list mapList as map>
+	${map.id} --> ${map.username} --> ${map.pwd}<br/>
+	</#list>
+</#if>
+<br/>
+<a href="${ROOT}/test.do/selectCount">测试mybatis (selectForInt)</a><br/>
+${size!0}<br/>
+<br/>
+<a href="${ROOT}/test.do/selectString">测试mybatis (selectForString)</a><br/>
+${name!}<br/>
+<br/>

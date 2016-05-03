@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.mgfinal.vo.Demo">
+	<select id="showId" resultType="com.mgfinal.vo.Demo">
+		select * from mg_user where id=#{id}
+	</select>
+	
+	<select id="showAll" resultType="com.mgfinal.vo.Demo">
+		select * from mg_user
+	</select>
+	
+	<select id="showMapById" resultType="map">
+		select * from mg_user where id=#{id}
+	</select>
+	
+	<select id="showListMap" resultType="map">
+		select * from mg_user limit 22,10
+	</select>
+	
+	<select id="showSize" resultType="int">
+		<!-- select count(1) count,now() time from mg_user -->
+		select * from mg_user where id=1
+	</select>
+	
+	<select id="showString" resultType="string">
+		select username from mg_user where id=#{id}
+	</select>
+</mapper>
