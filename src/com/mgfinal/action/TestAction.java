@@ -33,7 +33,6 @@ public class TestAction extends MGWorkServlet{
 		this.setAttr("dList", dList);
 		return "index";
 	}
-	
 	public String selectMap(){
 		Map<String,Object> map = demoService.showMapById("2");
 		this.setAttr("map", map);
@@ -65,5 +64,22 @@ public class TestAction extends MGWorkServlet{
 		return "page";
 	}
 	
+	public String executeQuery(){
+		List<Map<String,Object>> list = demoService.findMap();
+		this.setAttr("findList", list);
+		return "index";
+	}
+	
+	public String executeUpdate(){
+		demoService.addDemo();
+		this.setAttr("msg", "添加成功！");
+		return "index";
+	}
+	
+	public String executeUpdateTx(){
+		demoService.add2Demo();
+		this.setAttr("msg2", "操作成功，事务提交了！");
+		return "index";
+	}
 
 }

@@ -1,5 +1,6 @@
 <!doctype html>
 <meta charset="utf-8"/>
+<title>mybatis通用方法封装测试</title>
 <a href="${ROOT}/test.do/selectOne">测试mybatis (selectOne)</a><br/>
 <#if demo??>
 	${demo.id} --> ${demo.username} --> ${demo.pwd}
@@ -31,3 +32,11 @@ ${size!0}<br/>
 ${name!}<br/>
 <br/>
 <a href="${ROOT}/test.do/toPage?pageNum=1&pageSize=10">测试mybatis (pageHelper分页)</a><br/>
+<a href="${ROOT}/test.do/executeQuery">测试mybatis (executeQuery)</a><br/>
+<#if findList??>
+	<#list findList as map>
+	${map.id} --> ${map.username} --> ${map.pwd}<br/>
+	</#list>
+</#if><br/>
+<a href="${ROOT}/test.do/executeUpdate">测试mybatis (executeUpdate)</a><br/>${msg!}<br/>
+<a href="${ROOT}/test.do/executeUpdateTx">测试mybatis (executeUpdateWithTx 事务支持)</a><br/>${msg2!}<br/>

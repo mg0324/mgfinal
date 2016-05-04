@@ -27,4 +27,6 @@ mybatis-xx.jar 	   mybatis框架(orm)<br/>
 
 ###2016-5-4
 1.整合mgwork-ioc框架，测试通过。<br/>
+2.添加2个方法executeUpdate和executeQuery 通用的crud方法。<br/>
+3.正在想办法实现事务控制！
 待续...

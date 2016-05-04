@@ -25,4 +25,12 @@
 	<select id="showString" resultType="string">
 		select username from mg_user where id=#{id}
 	</select>
+	
+	<select id="findMap" resultType="map">
+		select * from mg_user limit 33,6
+	</select>
+	
+	<select id="addDemo">
+		insert into mg_user(username,pwd) values(#{username},#{pwd})
+	</select>
 </mapper>
