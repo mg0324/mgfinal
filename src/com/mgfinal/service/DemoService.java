@@ -9,7 +9,11 @@ import com.github.pagehelper.PageInfo;
 import com.mgfinal.dao.DemoDao;
 import com.mgfinal.vo.Demo;
 
+import mg.ioc.annotation.ToBean;
+import mg.ioc.annotation.UseBean;
+@ToBean
 public class DemoService {
+	@UseBean
 	private DemoDao demoDao;
 	
 	public DemoService(){

@@ -2,7 +2,7 @@ package com.mgfinal.action;
 
 import javax.servlet.annotation.WebServlet;
 
-import mg.core.MGWorkServlet;
+import mg.mvc.core.MGWorkServlet;
 @WebServlet("/index.do/*")
 public class IndexAction extends MGWorkServlet{
 

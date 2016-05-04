@@ -10,7 +10,8 @@ import com.github.pagehelper.PageInfo;
 import com.mgfinal.service.DemoService;
 import com.mgfinal.vo.Demo;
 
-import mg.core.MGWorkServlet;
+import mg.ioc.annotation.UseBean;
+import mg.mvc.core.MGWorkServlet;
 @WebServlet("/test.do/*")
 public class TestAction extends MGWorkServlet{
 	
@@ -18,8 +19,9 @@ public class TestAction extends MGWorkServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private static DemoService demoService = new DemoService();
+	@UseBean
+	private DemoService demoService;
+
 	public String selectOne(){
 		Demo demo = demoService.show();
 		this.setAttr("demo", demo);
