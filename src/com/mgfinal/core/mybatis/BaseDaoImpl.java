@@ -1,15 +1,21 @@
 package com.mgfinal.core.mybatis;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mgfinal.core.mybatis.util.SqlHelper;
 
 /**
  * 实现basedao的实现类，提供常用的dao层方法
@@ -23,15 +29,15 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * 获取sqlSession，不带事务
 	 * @return
 	 */
-	private SqlSession getSqlSession(){
+	public SqlSession getSqlSession(){
 		return sqlSessionFactory.openSession();
 	}
 	/**
 	 * 获取sqlSession,带事务，不自动提交的会话
 	 * @return
 	 */
-	private SqlSession getSqlSessionWithTx(){
-		return sqlSessionFactory.openSession(false);
+	public SqlSession getSqlSession(Boolean b){
+		return sqlSessionFactory.openSession(ExecutorType.BATCH,b);
 	}
 	/**
 	 * 查询得到某个对象
@@ -152,10 +158,8 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * @return 影响函数
 	 */
 	public int executeUpdate(String id,Object p){
-		sqlSession = getSqlSessionWithTx();
+		sqlSession = getSqlSession();
 		int row = sqlSession.update(id, p);
-		sqlSession.commit();//提交事务
-		sqlSession.close();
 		return row;
 	}
 	/**
@@ -165,15 +169,42 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * @return 影响函数
 	 * @throws MyBatisDDLException 
 	 */
-	public SqlSession executeUpdateWithTx(String id,Object p,SqlSession session) throws MyBatisDDLException{
-		if(session == null) session = getSqlSessionWithTx();
-		try{
-			Integer row = session.update(id, p);
-			System.out.println(row);
-		}catch(Exception e){
-			throw new MyBatisDDLException();//抛操作异常
+	public void executeUpdateWithTx(String id,Object p){
+		if(__session == null){
+			//新事物
+			__session = getSqlSession();
+			__list.clear();
 		}
-		return session;
+		String sql = SqlHelper.getNamespaceSql(__session, id, p);
+		__list.add(sql);
+	}
+	/**
+	 * 提交
+	 */
+	public void commit(){
+		if(__session == null){
+			System.out.println("未开启事务！");
+			return ;
+		}
+		Connection conn = __session.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			for(String sql : __list){
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.executeUpdate();
+				log.info("sqlHelper:"+sql);
+			}
+			conn.commit();
+			conn.close();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+				log.debug("回滚成功");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 	
 	
