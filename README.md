@@ -1,5 +1,9 @@
 # mgfinal
-基于mgwork（servlet3.0多实例非单例）做mvc框架，mybatis做orm框架，mgioc做单例容器的mgfinal框架，致力于打造实用的java后台底层。<br/>
+基于mgwork（servlet3.0多实例非单例）做mvc框架，
+mybatis做orm框架，
+mgioc做单例容器的mgfinal框架，
+mgutil做日志及常用工具方法管理，
+致力于打造实用的java后台底层。<br/>
 适用于中小型应用，及研究框架底层学习爱好者。
 
 ##关于作者
@@ -88,5 +92,6 @@ driud:<br/>
 	    <property name="poolPreparedStatements" value="true" />  
 	    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />  
     </dataSource>
-4.后续可能会增加单表基于对象的CRUD通用操作。
+5.升级mgwork-ioc-1.2.jar，将日志常用操作丢给mgutil来管理。<br/>
+6.后续可能会增加单表基于对象的CRUD通用操作。
 待续...
