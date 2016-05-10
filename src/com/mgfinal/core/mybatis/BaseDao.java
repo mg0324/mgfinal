@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.ext_ext.mybatisext.activerecord.DB;
+import com.ext_ext.mybatisext.activerecord.MybatisExt;
 import com.mgfinal.log.MgLog;
 
 /**
@@ -22,6 +24,7 @@ public abstract class BaseDao {
 	 */
 	protected static SqlSessionFactory sqlSessionFactory;
 	protected static SqlSession __session;
+	protected static DB __db;//mybatis-ext扩展
 	
 	static{
 		String resource = "mybatis.xml";
@@ -30,6 +33,7 @@ public abstract class BaseDao {
 			inputStream = Resources.getResourceAsStream(resource);
 			SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
 			sqlSessionFactory = builder.build(inputStream);
+			__db = MybatisExt.open(sqlSessionFactory);
 			MgLog.log.info("mgfinal mybatis初始化成功！");
 		} catch (IOException e) {
 			MgLog.log.info("未找到classpath:/mybatis.xml文件！");

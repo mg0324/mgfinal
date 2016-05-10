@@ -1,42 +1,81 @@
 <!doctype html>
 <meta charset="utf-8"/>
 <title>mybatis通用方法封装测试</title>
-<a href="${ROOT}/test.do/selectOne">测试mybatis (selectOne)</a><br/>
-<#if demo??>
-	${demo.id} --> ${demo.username} --> ${demo.pwd}
-</#if>
-<br/>
-<a href="${ROOT}/test.do/selectList">测试mybatis (selectList)</a><br/>
-<#if dList??>
-	<#list dList as demo>
-	${demo.id} --> ${demo.username} --> ${demo.pwd}<br/>
-	</#list>
-</#if>
-<br/>
-<a href="${ROOT}/test.do/selectMap">测试mybatis (selectMap)</a><br/>
-<#if map??>
-	${map.id} --> ${map.username} --> ${map.pwd}
-</#if>
-<br/>
-<a href="${ROOT}/test.do/selectListMap">测试mybatis (selectListMap)</a><br/>
-<#if mapList??>
-	<#list mapList as map>
-	${map.id} --> ${map.username} --> ${map.pwd}<br/>
-	</#list>
-</#if>
-<br/>
-<a href="${ROOT}/test.do/selectCount">测试mybatis (selectForInt)</a><br/>
-${size!0}<br/>
-<br/>
-<a href="${ROOT}/test.do/selectString">测试mybatis (selectForString)</a><br/>
-${name!}<br/>
-<br/>
-<a href="${ROOT}/test.do/toPage?pageNum=1&pageSize=10">测试mybatis (pageHelper分页)</a><br/>
-<a href="${ROOT}/test.do/executeQuery">测试mybatis (executeQuery)</a><br/>
-<#if findList??>
-	<#list findList as map>
-	${map.id} --> ${map.username} --> ${map.pwd}<br/>
-	</#list>
-</#if><br/>
-<a href="${ROOT}/test.do/executeUpdate">测试mybatis (executeUpdate)</a><br/>${msg!}<br/>
-<a href="${ROOT}/test.do/executeUpdateTx">测试mybatis (executeUpdateWithTx 事务支持)</a><br/>${msg2!}<br/>
+<style>
+	.unit{
+		width:45%;
+		float: left;
+	}
+</style>
+<body>
+<fieldset class="unit">
+	<legend>1-基于mybatis实现的dao通用方法</legend>
+	<a href="${ROOT}/test.do/selectOne">测试mybatis (selectOne)</a><br/>
+	<#if demo??>
+		${demo.id} --> ${demo.username} --> ${demo.pwd}
+	</#if>
+	<br/>
+	<a href="${ROOT}/test.do/selectList">测试mybatis (selectList)</a><br/>
+	<#if dList??>
+		<#list dList as demo>
+		${demo.id} --> ${demo.username} --> ${demo.pwd}<br/>
+		</#list>
+	</#if>
+	<br/>
+	<a href="${ROOT}/test.do/selectMap">测试mybatis (selectMap)</a><br/>
+	<#if map??>
+		${map.id} --> ${map.username} --> ${map.pwd}
+	</#if>
+	<br/>
+	<a href="${ROOT}/test.do/selectListMap">测试mybatis (selectListMap)</a><br/>
+	<#if mapList??>
+		<#list mapList as map>
+		${map.id} --> ${map.username} --> ${map.pwd}<br/>
+		</#list>
+	</#if>
+	<br/>
+	<a href="${ROOT}/test.do/selectCount">测试mybatis (selectForInt)</a><br/>
+	${size!0}<br/>
+	<br/>
+	<a href="${ROOT}/test.do/selectString">测试mybatis (selectForString)</a><br/>
+	${name!}<br/>
+</fieldset>
+<fieldset class="unit">
+	<legend>2-基于mybatis的pageHelper实现的分页demo</legend>
+	<a href="${ROOT}/test.do/toPage?pageNum=1&pageSize=10">测试mybatis (pageHelper分页)</a><br/>
+</fieldset>
+<fieldset class="unit">
+	<legend>****基于mybatis的通用query,ddl方法****</legend>
+	<a href="${ROOT}/test.do/executeQuery">测试mybatis (query)</a><br/>
+	<#if findList??>
+		<#list findList as map>
+		${map.id} --> ${map.username} --> ${map.pwd}<br/>
+		</#list>
+	</#if><br/>
+	<a href="${ROOT}/test.do/executeUpdate">测试mybatis (ddl)</a><br/>${msg!}<br/>
+</fieldset>
+<fieldset class="unit">
+	<legend>3-基于mybatis的通用ddlTx带事务支持的方法</legend>
+	<a href="${ROOT}/test.do/executeUpdateTx">测试mybatis (ddlTx 事务支持)</a><br/>${msg2!}<br/>
+</fieldset>
+<fieldset class="unit">
+	<legend>4-基于mybatisext的通用对象操作方法</legend>
+	<a href="${ROOT}/test.do/testSave">测试mybatis-ext (save对象)</a><br/>${msg3!}<br/>
+	<a href="${ROOT}/test.do/testSaveList">测试mybatis-ext (saveList对象)</a><br/>${msg4!}<br/>
+	<a href="${ROOT}/test.do/testDelete">测试mybatis-ext (delete对象)</a><br/>${msg5!}<br/>
+	<a href="${ROOT}/test.do/testUpdate">测试mybatis-ext (update对象)</a><br/>${msg6!}<br/>
+	<a href="${ROOT}/test.do/testCount">测试mybatis-ext (count记录数)</a><br/>${count_d!}<br/>
+	<a href="${ROOT}/test.do/testSelectList">测试mybatis-ext (selectList对象)</a><br/>
+	<#if dlist??>
+		<#list dlist as demo>
+		${demo.id} --> ${demo.username} --> ${demo.pwd}<br/>
+		</#list>
+	</#if>
+	<a href="${ROOT}/test.do/testPage">测试mybatis-ext (page分页)</a><br/>
+	<#if listd??>
+		<#list listd as demo>
+		${demo.id} --> ${demo.username} --> ${demo.pwd}<br/>
+		</#list>
+	</#if>
+</fieldset>
+</body>

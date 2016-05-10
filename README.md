@@ -6,6 +6,25 @@ mgutil做日志及常用工具方法管理，
 致力于打造实用的java后台底层。<br/>
 适用于中小型应用，及研究框架底层学习爱好者。
 
+##相关包
+	
+	mgwork-ioc-1.1.jar 			mgwork-ioc框架集合（mvc + ioc）
+		--fastjson.jar 			json解析包
+		--freemarker.jar 			视图包，支持freemarker目前。
+	mgutil-1.0.jar				通用工具类模块，包含扫描包，proputil,log4j日志器
+		--log4j.jar				log4j日志
+	mybatis-xx.jar 	   			mybatis框架(orm)
+		--jsqlparser.jar 	
+		--pagehelper.jar 			mybatis分页插件
+		--mybatisext.jar			mybatis的扩展工具，用来完成对象CRUD操作
+	常用数据源
+		--c3p0 
+			--c3p0-0.9.5.1.jar		c3p0数据源依赖包
+			--mchange-commons-java.jar
+		--druid
+			--druid-1.0.5.jar		druid数据源依赖包
+	
+
 ##关于作者
 一个喜爱代码的狂热工作者，常用名梦网，梦来梦往，mg0324等。<br/>
 QQ:1092017732<br/>
@@ -14,13 +33,10 @@ gitoschina:https://git.oschina.net/mgang<br/>
 
 如果觉得不错的话，别忘了给个star咯。thanks.<br/>
 
-##相关包
-mgwork-ioc-1.1.jar mgwork-ioc框架集合（mvc + ioc）<br/>
-	--fastjson.jar json解析包<br/>
-	--freemarker.jar 视图包<br/>
-mybatis-xx.jar 	   mybatis框架(orm)<br/>
-	--jsqlparser.jar <br/>
-	--pagehelper.jar mybatis分页插件<br/>
+##项目初探
+###2016-5-11 demo 图
+![](./doc/img/crud.png)
+
 
 ##更新日志
 ###2016-5-3
@@ -93,5 +109,8 @@ driud:<br/>
 	    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />  
     </dataSource>
 5.升级mgwork-ioc-1.2.jar，将日志常用操作丢给mgutil来管理。<br/>
-6.后续可能会增加单表基于对象的CRUD通用操作。
+###2016-5-11
+1.集成mybatisext来完成对象CRUD操作的通用方法实现，包括(save,delete,update,one,list,page,count等);<br/>
+
+2.后续可能会增加缓存。
 待续...

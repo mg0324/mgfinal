@@ -1,5 +1,6 @@
 package com.mgfinal.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ext_ext.mybatisext.helper.Page;
 import com.github.pagehelper.PageInfo;
 import com.mgfinal.dao.DemoDao;
 import com.mgfinal.vo.Demo;
@@ -72,6 +74,51 @@ public class DemoService {
 		this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
 		//提交事务
 		this.demoDao.end();
-		
 	}
+	
+	public void save(){
+		Demo d = new Demo();
+		d.setPwd("123456");
+		d.setUsername("mybatis1234");
+		this.demoDao.save(d, Demo.class);
+	}
+	
+	public void saveList(){
+		Demo d = new Demo();
+		d.setPwd("123456");
+		d.setUsername("mybatis1234");
+		List<Demo> ld = new ArrayList<Demo>();
+		ld.add(d);
+		d = new Demo();
+		d.setUsername("123213--");
+		d.setPwd("987654321");
+		ld.add(d);
+		this.demoDao.saveList(ld, Demo.class);
+	}
+	
+	public void delete(){
+		Demo d = this.demoDao.one("id", 2107, Demo.class);
+		this.demoDao.delete(d, Demo.class);
+	}
+	
+	public List<Demo> selectList(){
+		Demo d = new Demo();
+		d.setUsername("123");
+		return this.demoDao.list(d, Demo.class);
+	}
+	
+	public void update(){
+		Demo d = this.demoDao.one("id", 2109, Demo.class);
+		d.setPwd("1234567890987654321");
+		this.demoDao.update(d, Demo.class);
+	}
+	
+	public List<Demo> page(int pageNo,int size,Demo condition) {
+		return this.demoDao.page(Demo.class, pageNo,size, condition);
+	}
+
+	public int count() {
+		return this.demoDao.count(null, Demo.class);
+	}
+	
 }

@@ -1,10 +1,14 @@
 package com.mgfinal.vo;
 
-public class Demo {
+import com.ext_ext.mybatisext.annotation.TableName;
+
+@TableName(name="mg_user")
+public class Demo{
 	
 	private String id;
 	private String username;
 	private String pwd;
+	
 	public String getId() {
 		return id;
 	}

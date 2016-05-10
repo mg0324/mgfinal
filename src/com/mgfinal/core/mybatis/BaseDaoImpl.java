@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.ext_ext.mybatisext.activerecord.Table;
+import com.ext_ext.mybatisext.helper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mgfinal.log.MgLog;
@@ -175,6 +177,7 @@ public class BaseDaoImpl<T> extends BaseDao{
 		}catch(Exception e){
 			__session.rollback();
 			MgLog.log.info("事务回滚 <-- " + e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 	/**
@@ -195,6 +198,52 @@ public class BaseDaoImpl<T> extends BaseDao{
 			__session.close();
 		}
 	}
+	/*****对象操作*****/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void save(T obj,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		d.getInsert().insert(obj);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void saveList(List<T> obj,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		d.getInsert().insert(obj);
+	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void update(T obj,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		d.getUpdate().updateById(obj);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void delete(T obj,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		d.getDelete().deleteById(obj);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public T one(String key,Object val,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		return d.getSelect().one(key, val);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public T one(T condition,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		return d.getSelect().one(condition);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<T> list(T condition,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		return d.getSelect().list(condition);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<T> page(Class clazz,int pageNo,int size,T condition,String ...columns){
+		Table<T,Object> d = __db.active(clazz);
+		return d.getSelect().paging(pageNo, size, condition, columns);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public int count(T condition,Class clazz){
+		Table<T,Object> d = __db.active(clazz);
+		return d.getSelect().count(condition);
+	}
 	
 }
