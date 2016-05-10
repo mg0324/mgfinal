@@ -155,6 +155,7 @@ public class BaseDaoImpl<T> extends BaseDao{
 	public int ddl(String id,Object p){
 		sqlSession = getSqlSession();
 		int row = sqlSession.update(id, p);
+		sqlSession.commit();
 		return row;
 	}
 	/**
