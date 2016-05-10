@@ -1,5 +1,6 @@
 package com.mgfinal.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +8,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.github.pagehelper.PageInfo;
-import com.mgfinal.core.mybatis.MyBatisDDLException;
 import com.mgfinal.dao.DemoDao;
 import com.mgfinal.vo.Demo;
 
@@ -52,34 +50,28 @@ public class DemoService {
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> findMap() {
-		return  (List<Map<String, Object>>) this.demoDao.executeQuery("com.mgfinal.vo.Demo.findMap", null);
+		return  (List<Map<String, Object>>) this.demoDao.query("com.mgfinal.vo.Demo.findMap", null);
 	}
 
 	public void addDemo() {
 		Map<String, Object> p = new HashMap<String, Object>();
 		p.put("pwd", Math.random());
 		p.put("username", UUID.randomUUID().toString().substring(0, 10));
-		this.demoDao.executeUpdate("com.mgfinal.vo.Demo.addDemo", p);
+		this.demoDao.ddl("com.mgfinal.vo.Demo.addDemo", p);
 	}
 
 	public void add2Demo() {
 		Map<String, Object> p = new HashMap<String, Object>();
-		p.put("pwd", Math.random());
+		p.put("pwd", new Date().toLocaleString());
 		p.put("username", UUID.randomUUID().toString().substring(0, 10));
-		SqlSession session = null;
-		try {
-			//操作1
-			session = this.demoDao.executeUpdateWithTx("com.mgfinal.vo.Demo.addDemo", p, session);
-			//操作2
-			session = this.demoDao.executeUpdateWithTx("com.mgfinal.vo.Demo.addDemo", null, session);
-			//提交事务
-			session.commit();
-		} catch (MyBatisDDLException e) {
-			session.rollback();//回滚
-			e.printStackTrace();
-		}finally{
-			if(session!=null) session.close();
-		}
+		//开启事务
+		this.demoDao.start();
+		//操作1
+		this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+		//操作2
+		this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+		//提交事务
+		this.demoDao.end();
 		
 	}
 }

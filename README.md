@@ -29,4 +29,20 @@ mybatis-xx.jar 	   mybatis框架(orm)<br/>
 1.整合mgwork-ioc框架，测试通过。<br/>
 2.添加2个方法executeUpdate和executeQuery 通用的crud方法。<br/>
 3.正在想办法实现事务控制！
+
+###2016-5-10
+1.完成事务控制，找到之前的原因（mysql的配置my.ini，未使用innodb的引擎，导致不支持事务。）找到原因后，事务支持成功。<br/>
+
+	//开启事务
+	this.demoDao.start();
+	//操作1
+	this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+	//操作2
+	this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+	//提交事务
+	this.demoDao.end();
+
+2.start,end的事务，放到master主分支中。另外还有一个基于SqlHelper先获取sql,然后conn来commit,rollback的事务支持提交到了v0.1分支。<br/>
+3.修改方法名称 executeUpdate -> ddl , executeQuery -> query , executeUpdateWithTx -> ddlTx，只要是简单明了。<br/>
+4.后续可能会增加单表基于对象的CRUD通用操作。
 待续...

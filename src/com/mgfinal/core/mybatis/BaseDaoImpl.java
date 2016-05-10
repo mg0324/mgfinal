@@ -138,7 +138,7 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * @param p sql的参数
 	 * @return 结果集
 	 */
-	public Object executeQuery(String id,Object p){
+	public Object query(String id,Object p){
 		sqlSession = getSqlSession();
 		ResultSetHandler rsh = new ResultSetHandler();
 		sqlSession.select(id,p,rsh);
@@ -151,11 +151,9 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * @param p sql的参数
 	 * @return 影响函数
 	 */
-	public int executeUpdate(String id,Object p){
-		sqlSession = getSqlSessionWithTx();
+	public int ddl(String id,Object p){
+		sqlSession = getSqlSession();
 		int row = sqlSession.update(id, p);
-		sqlSession.commit();//提交事务
-		sqlSession.close();
 		return row;
 	}
 	/**
@@ -165,15 +163,35 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 * @return 影响函数
 	 * @throws MyBatisDDLException 
 	 */
-	public SqlSession executeUpdateWithTx(String id,Object p,SqlSession session) throws MyBatisDDLException{
-		if(session == null) session = getSqlSessionWithTx();
-		try{
-			Integer row = session.update(id, p);
-			System.out.println(row);
-		}catch(Exception e){
-			throw new MyBatisDDLException();//抛操作异常
+	public void ddlTx(String id,Object p){
+		if(__session == null){
+			log.info("事务未开启，请显示调用start()来开启事务！");
+			return ;
 		}
-		return session;
+		try{
+			__session.update(id, p);
+		}catch(Exception e){
+			__session.rollback();
+			log.info("事务回滚 <-- " + e.getMessage());
+		}
+	}
+	/**
+	 * 开启事务
+	 */
+	public void start(){
+		if(__session != null){
+			__session.close();
+		}
+		__session = getSqlSessionWithTx();
+	}
+	/**
+	 * 提交事务
+	 */
+	public void end(){
+		if(__session != null){
+			__session.commit();
+			__session.close();
+		}
 	}
 	
 	
