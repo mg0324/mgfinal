@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mgfinal.log.MgLog;
 
 /**
  * 实现basedao的实现类，提供常用的dao层方法
@@ -165,14 +166,14 @@ public class BaseDaoImpl<T> extends BaseDao{
 	 */
 	public void ddlTx(String id,Object p){
 		if(__session == null){
-			log.info("事务未开启，请显示调用start()来开启事务！");
+			MgLog.log.info("事务未开启，请显示调用start()来开启事务！");
 			return ;
 		}
 		try{
 			__session.update(id, p);
 		}catch(Exception e){
 			__session.rollback();
-			log.info("事务回滚 <-- " + e.getMessage());
+			MgLog.log.info("事务回滚 <-- " + e.getMessage());
 		}
 	}
 	/**
