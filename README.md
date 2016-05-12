@@ -1,10 +1,11 @@
 # mgfinal
-基于mgwork（servlet3.0多实例非单例）做mvc框架，
-mybatis做orm框架，
-mgioc做单例容器的mgfinal框架，
-mgutil做日志及常用工具方法管理，
-致力于打造实用的java后台底层。<br/>
-适用于中小型应用，及研究框架底层学习爱好者。
+
+	基于mgwork（servlet3.0多实例非单例）做mvc框架，
+	mybatis做orm框架，
+	mgioc做单例容器的mgfinal框架，
+	mgutil做日志及常用工具方法管理，
+	致力于打造实用的java后台底层。<br/>
+	适用于中小型应用，及研究框架底层学习爱好者。
 
 ##mgfinal框架源码目录
 ![](./doc/img/mgfinal.png)
