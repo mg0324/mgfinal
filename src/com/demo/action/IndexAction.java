@@ -1,8 +1,8 @@
-package com.mgfinal.action;
+package com.demo.action;
 
 import javax.servlet.annotation.WebServlet;
 
-import mg.mvc.core.MGWorkServlet;
+import com.mgfinal.core.mvc.core.MGWorkServlet;
 @WebServlet("/index.do/*")
 public class IndexAction extends MGWorkServlet{
 

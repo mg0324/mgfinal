@@ -6,9 +6,13 @@ mgutil做日志及常用工具方法管理，
 致力于打造实用的java后台底层。<br/>
 适用于中小型应用，及研究框架底层学习爱好者。
 
+##mgfinal框架源码目录
+![](./doc/img/mgfinal.png)
+
 ##相关包
+<span style="text-decoration: line-through;">(mgwork-ioc-2.0.jar mgwork-ioc框架集合（mvc + ioc） ----将源码移动到mgfinal中管理）</span>
+
 	
-	mgwork-ioc-2.0.jar 			mgwork-ioc框架集合（mvc + ioc）
 		--fastjson.jar 			json解析包
 		--freemarker.jar 			视图包，支持freemarker目前。
 		--jedis.jar				使用redis db0来做ioc容器。
@@ -50,6 +54,9 @@ gitoschina:https://git.oschina.net/mgang<br/>
 ##项目初探
 ###2016-5-11 demo 图
 ![](./doc/img/crud.png)
+
+###2016-5-13 pagehelper demo图
+![](./doc/img/pagehelper.png)
 
 
 ##更新日志
@@ -176,6 +183,13 @@ driud:<br/>
 4.使用redis图形客户端查看redis数据库中的key情况：
 ![](./doc/img/mgfinal-redis-orm.png)
 
-5.生成mgfinal-1.0版本，导出jar包为mgwork-mybatis-1.0.jar。<br/>
-(其jar包中多是集成mybatis的，可以做为mgwork的分支包管理。)
+5.生成mgfinal-1.0版本，导出jar包为mgfinal-1.0.jar。
+
+6.加入mgwork ioc等源码，让mgfinal管理，并调整目录。更改web.xml中mgfinal ioc监听启动配置。
+
+	<listener>
+		<listener-class>com.mgfinal.core.ioc.context.IocListener</listener-class>
+	</listener>
+
+7.后续会编写使用手册，有需要，可以收藏，等待手册。
 

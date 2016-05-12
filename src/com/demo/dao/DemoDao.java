@@ -1,9 +1,8 @@
-package com.mgfinal.dao;
+package com.demo.dao;
 
+import com.demo.vo.Demo;
+import com.mgfinal.core.ioc.annotation.ToBean;
 import com.mgfinal.core.mybatis.dao.BaseDaoImpl;
-import com.mgfinal.vo.Demo;
-
-import mg.ioc.annotation.ToBean;
 @ToBean
 public class DemoDao extends BaseDaoImpl<Demo>{
 

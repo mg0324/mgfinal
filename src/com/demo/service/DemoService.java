@@ -1,4 +1,4 @@
-package com.mgfinal.service;
+package com.demo.service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,13 +9,12 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.demo.dao.DemoDao;
+import com.demo.vo.Demo;
 import com.github.pagehelper.PageInfo;
+import com.mgfinal.core.ioc.annotation.ToBean;
+import com.mgfinal.core.ioc.annotation.UseBean;
 import com.mgfinal.core.mybatis.service.BaseService;
-import com.mgfinal.dao.DemoDao;
-import com.mgfinal.vo.Demo;
-
-import mg.ioc.annotation.ToBean;
-import mg.ioc.annotation.UseBean;
 @ToBean
 public class DemoService extends BaseService{
 	/**
@@ -27,43 +26,43 @@ public class DemoService extends BaseService{
 	
 	public Demo show(){
 		String id = "1";
-		return (Demo) this.demoDao.selectOne("com.mgfinal.vo.Demo.showId",id);
+		return (Demo) this.demoDao.selectOne("com.demo.vo.Demo.showId",id);
 	}
 	
 	public List<Demo> showAll(){
-		return this.demoDao.selectList("com.mgfinal.vo.Demo.showAll",null);
+		return this.demoDao.selectList("com.demo.vo.Demo.showAll",null);
 	}
 
 	public Map<String, Object> showMapById(String id) {
-		return this.demoDao.selectMap("com.mgfinal.vo.Demo.showMapById", id);
+		return this.demoDao.selectMap("com.demo.vo.Demo.showMapById", id);
 	}
 
 	public List<Map<String, Object>> showListMap() {
-		return this.demoDao.selectListMap("com.mgfinal.vo.Demo.showListMap", null);
+		return this.demoDao.selectListMap("com.demo.vo.Demo.showListMap", null);
 	}
 
 	public Integer showSize() {
-		return this.demoDao.selectForInt("com.mgfinal.vo.Demo.showSize", null);
+		return this.demoDao.selectForInt("com.demo.vo.Demo.showSize", null);
 	}
 
 	public String showString(String id) {
-		return this.demoDao.selectForString("com.mgfinal.vo.Demo.showString", id);
+		return this.demoDao.selectForString("com.demo.vo.Demo.showString", id);
 	}
 
 	public PageInfo<Demo> selectPage(HttpServletRequest request) {
-		return this.demoDao.selectPage("com.mgfinal.vo.Demo.showAll", null, request);
+		return this.demoDao.selectPage("com.demo.vo.Demo.showAll", null, request);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> findMap() {
-		return  (List<Map<String, Object>>) this.demoDao.query("com.mgfinal.vo.Demo.findMap", null);
+		return  (List<Map<String, Object>>) this.demoDao.query("com.demo.vo.Demo.findMap", null);
 	}
 
 	public void addDemo() {
 		Map<String, Object> p = new HashMap<String, Object>();
 		p.put("pwd", Math.random());
 		p.put("username", UUID.randomUUID().toString().substring(0, 10));
-		this.demoDao.ddl("com.mgfinal.vo.Demo.addDemo", p);
+		this.demoDao.ddl("com.demo.vo.Demo.addDemo", p);
 	}
 
 	public void add2Demo() {
@@ -73,9 +72,9 @@ public class DemoService extends BaseService{
 		//开启事务
 		this.demoDao.start();
 		//操作1
-		this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+		this.demoDao.ddlTx("com.demo.vo.Demo.addDemo", p);
 		//操作2
-		this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+		this.demoDao.ddlTx("com.demo.vo.Demo.addDemo", p);
 		//提交事务
 		this.demoDao.end();
 	}
