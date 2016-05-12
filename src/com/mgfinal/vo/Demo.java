@@ -1,10 +1,17 @@
 package com.mgfinal.vo;
 
+import java.io.Serializable;
+
+import com.alibaba.fastjson.JSONObject;
 import com.ext_ext.mybatisext.annotation.TableName;
 
 @TableName(name="mg_user")
-public class Demo{
+public class Demo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String username;
 	private String pwd;
@@ -26,5 +33,9 @@ public class Demo{
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
 	}
 }

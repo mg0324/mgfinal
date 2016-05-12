@@ -8,9 +8,10 @@ mgutil做日志及常用工具方法管理，
 
 ##相关包
 	
-	mgwork-ioc-1.1.jar 			mgwork-ioc框架集合（mvc + ioc）
+	mgwork-ioc-2.0.jar 			mgwork-ioc框架集合（mvc + ioc）
 		--fastjson.jar 			json解析包
 		--freemarker.jar 			视图包，支持freemarker目前。
+		--jedis.jar				使用redis db0来做ioc容器。
 	mgutil-1.0.jar				通用工具类模块，包含扫描包，proputil,log4j日志器
 		--log4j.jar				log4j日志
 	mybatis-xx.jar 	   			mybatis框架(orm)
@@ -23,7 +24,20 @@ mgutil做日志及常用工具方法管理，
 			--mchange-commons-java.jar
 		--druid
 			--druid-1.0.5.jar		druid数据源依赖包
+	mybatis-redis.jar				mybatis的二级查询缓存（可选）
+		--commons-pool2-.jar		依赖pool2jar
+		--jedis.jar				java操作redis的客户端包
 	
+##mgfinal-1.0版本
+	2016-5-13 1:25,生成mgfinal的1.0版本。
+	特性：
+		1.点对点servlet3.0高速mvc控制跳转。
+		2.基于redis为容器的@ToBean,@UseBean高速ioc依赖注入。
+		3.支持jsp,html,freemarker的java视图。（后续可以添加更多支持）
+		4.集成mybatis的动态sql,通用orm。
+		5.集成mybatis-ext的简易对象CURD。
+		6.集成mybatis-redis的mybatis二级查询缓存。
+		7.支持流行数据源druid,c3p0,及mybatis自带数据源。
 
 ##关于作者
 一个喜爱代码的狂热工作者，常用名梦网，梦来梦往，mg0324等。<br/>
@@ -112,5 +126,56 @@ driud:<br/>
 ###2016-5-11
 1.集成mybatisext来完成对象CRUD操作的通用方法实现，包括(save,delete,update,one,list,page,count等);<br/>
 
-2.后续可能会增加缓存。
-待续...
+###2016-5-13
+1.集成mgwork-ioc-2.0.jar，使用redis来做ioc容器，默认使用的是redis的0数据库。
+(请升级mgwork-ioc-2.0.jar，欢迎到http://git.oschina.net/mgang/mgwork下载)<br/>
+	
+	注意点：1.redis存储对象，需要改对象实现Serializable序列化接口。
+			所以service抽象了一层BaseService,目前用做序列化实现。
+			dao的序列化交给了baseDaoImpl来实现。
+			vo,bean的部分，就需要自己手动加上了。
+		  2.在mgwork.properties中加上配置ioc容器的redis服务。
+		  	#redis服务主机
+			mg.ioc.redis.host = localhost
+			#redis服务端口
+			mg.ioc.redis.port = 6379
+			
+2.使用mybatis-redis.jar工具包，来做mybatis查询缓存，提供查询响应效率。<br/>	
+	
+	注意点：1.加入mybatis-redis-1.0.0-beta2.jar包。
+		  2.在要使用查询缓存的mapper中首行加上配置。
+		  	<!-- redis缓存 -->
+			<cache type="org.mybatis.caches.redis.RedisCache" />
+		  3.可以开启mybatis中的自身缓存（一级），redis就算做2级缓存了。在mybatis.xml主配置文件中
+		  加上settings节点如下：
+		  	<settings>
+				<!-- 这个配置使全局的映射器启用或禁用缓存 -->
+				<setting name="cacheEnabled" value="true" />
+				<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
+				<setting name="multipleResultSetsEnabled" value="true" />
+				<!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新 -->
+				<setting name="defaultExecutorType" value="REUSE" />
+				<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+				<setting name="lazyLoadingEnabled" value="false" />
+				<setting name="aggressiveLazyLoading" value="true" />
+				<!-- <setting name="enhancementEnabled" value="true"/> -->
+				<!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。 -->
+				<setting name="defaultStatementTimeout" value="25000" />
+			</settings>
+3.加入mybatis-redis要的配置文件，配置查询缓存连接的redis服务，如下：
+	
+	#使用redis的第2个数据库来做mybatis查询缓存
+	host=localhost
+	port=6379
+	connectionTimeout=5000
+	soTimeout=5000
+	password=
+	#选择数据库，0被mgwork-ioc占用
+	database=1
+	clientName=
+4.使用redis图形客户端查看redis数据库中的key情况：
+![](./doc/img/mgfinal-redis-orm.png)
+
+5.生成mgfinal-1.0版本，导出jar包为mgwork-mybatis-1.0.jar。<br/>
+(其jar包中多是集成mybatis的，可以做为mgwork的分支包管理。)
+

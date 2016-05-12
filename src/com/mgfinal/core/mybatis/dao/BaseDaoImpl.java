@@ -1,5 +1,6 @@
-package com.mgfinal.core.mybatis;
+package com.mgfinal.core.mybatis.dao;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 
 import com.ext_ext.mybatisext.activerecord.Table;
-import com.ext_ext.mybatisext.helper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mgfinal.log.MgLog;
+import com.mg.log.MgLog;
+import com.mgfinal.core.mybatis.ResultSetHandler;
+import com.mgfinal.core.mybatis.RowHandler;
+import com.mgfinal.core.mybatis.StringHandler;
 
 /**
  * 实现basedao的实现类，提供常用的dao层方法
@@ -20,7 +23,11 @@ import com.mgfinal.log.MgLog;
  * @date 2016-5-3
  *
  */
-public class BaseDaoImpl<T> extends BaseDao{
+public class BaseDaoImpl<T> extends BaseDao implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected SqlSession sqlSession;
 	/**
 	 * 获取sqlSession，不带事务
@@ -96,7 +103,8 @@ public class BaseDaoImpl<T> extends BaseDao{
 		RowHandler rh = new RowHandler();
 		sqlSession.select(id, p, rh);
 		sqlSession.close();
-		return Integer.parseInt(rh.getValue());
+		String row = rh.getValue() == null ? "0" : rh.getValue();
+		return Integer.parseInt(row);
 	}
 	/**
 	 * 查询某一列的值

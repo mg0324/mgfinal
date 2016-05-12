@@ -1,4 +1,4 @@
-package com.mgfinal.core.mybatis;
+package com.mgfinal.core.mybatis.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.ext_ext.mybatisext.activerecord.DB;
 import com.ext_ext.mybatisext.activerecord.MybatisExt;
-import com.mgfinal.log.MgLog;
+import com.mg.log.MgLog;
 
 /**
  * mgfinal 封裝的mybatis的basedao类

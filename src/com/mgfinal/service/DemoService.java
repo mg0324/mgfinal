@@ -9,15 +9,19 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.ext_ext.mybatisext.helper.Page;
 import com.github.pagehelper.PageInfo;
+import com.mgfinal.core.mybatis.service.BaseService;
 import com.mgfinal.dao.DemoDao;
 import com.mgfinal.vo.Demo;
 
 import mg.ioc.annotation.ToBean;
 import mg.ioc.annotation.UseBean;
 @ToBean
-public class DemoService {
+public class DemoService extends BaseService{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@UseBean
 	private DemoDao demoDao;
 	
