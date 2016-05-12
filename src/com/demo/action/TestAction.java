@@ -1,4 +1,4 @@
-package com.mgfinal.action;
+package com.demo.action;
 
 import java.util.List;
 import java.util.Map;
@@ -6,13 +6,11 @@ import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ext_ext.mybatisext.helper.Page;
+import com.demo.service.DemoService;
+import com.demo.vo.Demo;
 import com.github.pagehelper.PageInfo;
-import com.mgfinal.service.DemoService;
-import com.mgfinal.vo.Demo;
-
-import mg.ioc.annotation.UseBean;
-import mg.mvc.core.MGWorkServlet;
+import com.mgfinal.core.ioc.annotation.UseBean;
+import com.mgfinal.core.mvc.core.MGWorkServlet;
 @WebServlet("/test.do/*")
 public class TestAction extends MGWorkServlet{
 	

@@ -1,4 +1,4 @@
-package com.mgfinal.vo;
+package com.demo.vo;
 
 import java.io.Serializable;
 

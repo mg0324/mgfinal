@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="com.mgfinal.vo.Demo">
+<mapper namespace="com.demo.vo.Demo">
 	<!-- redis缓存 -->
 	<cache type="org.mybatis.caches.redis.RedisCache" />
 	
-	<select id="showId" resultType="com.mgfinal.vo.Demo">
+	<select id="showId" resultType="com.demo.vo.Demo">
 		select * from mg_user where id=#{id}
 	</select>
 	
-	<select id="showAll" resultType="com.mgfinal.vo.Demo">
+	<select id="showAll" resultType="com.demo.vo.Demo">
 		select * from mg_user
 	</select>
 	

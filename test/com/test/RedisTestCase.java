@@ -6,11 +6,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mybatis.caches.redis.RedisCache;
 
-import com.mgfinal.dao.DemoDao;
-import com.mgfinal.service.DemoService;
-import com.mgfinal.vo.Demo;
-
-import mg.ioc.annotation.UseBean;
+import com.demo.dao.DemoDao;
+import com.demo.service.DemoService;
+import com.demo.vo.Demo;
+import com.mgfinal.core.ioc.annotation.UseBean;
 
 /**
  * Test with Ubuntu
