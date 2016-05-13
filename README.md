@@ -10,9 +10,6 @@
 ##mgfinal框架源码目录
 ![](./doc/img/mgfinal.png)
 
-##mgfinal框架源码目录
-![](./doc/img/mgfinal.png)
-
 ##相关包
 <span style="text-decoration: line-through;">(mgwork-ioc-2.0.jar mgwork-ioc框架集合（mvc + ioc） ----将源码移动到mgfinal中管理）</span>
 
