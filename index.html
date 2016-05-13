@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Mgfinal by mg0324</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Mgfinal</h1>
+      <h2 class="project-tagline">基于mgwork（servlet3.0多实例非单例）做mvc框架，mybatis做orm框架，mgioc做单例容器的mgfinal框架，致力于打造实用的java后台底层。 适用于中小型应用，及研究框架底层学习爱好者</h2>
+      <a href="https://github.com/mg0324/mgfinal" class="btn">View on GitHub</a>
+      <a href="https://github.com/mg0324/mgfinal/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mg0324/mgfinal/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="mgfinal" class="anchor" href="#mgfinal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mgfinal</h1>
+
+<pre><code>基于mgwork（servlet3.0多实例非单例）做mvc框架，
+mybatis做orm框架，
+mgioc做单例容器的mgfinal框架，
+mgutil做日志及常用工具方法管理，
+致力于打造实用的java后台底层。&lt;br/&gt;
+适用于中小型应用，及研究框架底层学习爱好者。
+</code></pre>
+
+<h2>
+<a id="mgfinal框架源码目录" class="anchor" href="#mgfinal%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mgfinal框架源码目录</h2>
+
+<p><img src="./doc/img/mgfinal.png" alt=""></p>
+
+<h2>
+<a id="相关包" class="anchor" href="#%E7%9B%B8%E5%85%B3%E5%8C%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>相关包</h2>
+
+<p>(mgwork-ioc-2.0.jar mgwork-ioc框架集合（mvc + ioc） ----将源码移动到mgfinal中管理）</p>
+
+<pre><code>    --fastjson.jar          json解析包
+    --freemarker.jar            视图包，支持freemarker目前。
+    --jedis.jar             使用redis db0来做ioc容器。
+mgutil-1.0.jar              通用工具类模块，包含扫描包，proputil,log4j日志器
+    --log4j.jar             log4j日志
+mybatis-xx.jar              mybatis框架(orm)
+    --jsqlparser.jar    
+    --pagehelper.jar            mybatis分页插件
+    --mybatisext.jar            mybatis的扩展工具，用来完成对象CRUD操作
+常用数据源
+    --c3p0 
+        --c3p0-0.9.5.1.jar      c3p0数据源依赖包
+        --mchange-commons-java.jar
+    --druid
+        --druid-1.0.5.jar       druid数据源依赖包
+mybatis-redis.jar               mybatis的二级查询缓存（可选）
+    --commons-pool2-.jar        依赖pool2jar
+    --jedis.jar             java操作redis的客户端包
+</code></pre>
+
+<h2>
+<a id="mgfinal-10版本" class="anchor" href="#mgfinal-10%E7%89%88%E6%9C%AC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mgfinal-1.0版本</h2>
+
+<pre><code>2016-5-13 1:25,生成mgfinal的1.0版本。
+特性：
+    1.点对点servlet3.0高速mvc控制跳转。
+    2.基于redis为容器的@ToBean,@UseBean高速ioc依赖注入。
+    3.支持jsp,html,freemarker的java视图。（后续可以添加更多支持）
+    4.集成mybatis的动态sql,通用orm。
+    5.集成mybatis-ext的简易对象CURD。
+    6.集成mybatis-redis的mybatis二级查询缓存。
+    7.支持流行数据源druid,c3p0,及mybatis自带数据源。
+</code></pre>
+
+<h2>
+<a id="关于作者" class="anchor" href="#%E5%85%B3%E4%BA%8E%E4%BD%9C%E8%80%85" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关于作者</h2>
+
+<p>一个喜爱代码的狂热工作者，常用名梦网，梦来梦往，mg0324等。<br>
+QQ:1092017732<br>
+github:<a href="https://github.com/mg0324">https://github.com/mg0324</a><br>
+gitoschina:<a href="https://git.oschina.net/mgang">https://git.oschina.net/mgang</a><br></p>
+
+<p>如果觉得不错的话，别忘了给个star咯。thanks.<br></p>
+
+<h2>
+<a id="项目初探" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E5%88%9D%E6%8E%A2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>项目初探</h2>
+
+<h3>
+<a id="2016-5-11-demo-图" class="anchor" href="#2016-5-11-demo-%E5%9B%BE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-11 demo 图</h3>
+
+<p><img src="./doc/img/crud.png" alt=""></p>
+
+<h3>
+<a id="2016-5-13-pagehelper-demo图" class="anchor" href="#2016-5-13-pagehelper-demo%E5%9B%BE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-13 pagehelper demo图</h3>
+
+<p><img src="./doc/img/pagehelper.png" alt=""></p>
+
+<h2>
+<a id="更新日志" class="anchor" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>更新日志</h2>
+
+<h3>
+<a id="2016-5-3" class="anchor" href="#2016-5-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-3</h3>
+
+<p>1.继承mgwork-2.0 和 mybatis 3.* 到mgfinal框架中。<br>
+2.搭建mybatis底层，初步增加丰富的查询封装。
+(selectOne)，(selectList)，(selectMap)，(selectListMap)，(selectForInt)，(selectForString)等<br>
+3.集成PageHelper来实现mybatis分页，新增分页案例及方法(selectPage).<br></p>
+
+<h3>
+<a id="2016-5-4" class="anchor" href="#2016-5-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-4</h3>
+
+<p>1.整合mgwork-ioc框架，测试通过。<br>
+2.添加2个方法executeUpdate和executeQuery 通用的crud方法。<br>
+3.正在想办法实现事务控制！</p>
+
+<h3>
+<a id="2016-5-10" class="anchor" href="#2016-5-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-10</h3>
+
+<p>1.完成事务控制，找到之前的原因（mysql的配置my.ini，未使用innodb的引擎，导致不支持事务。）找到原因后，事务支持成功。<br></p>
+
+<pre><code>//开启事务
+this.demoDao.start();
+//操作1
+this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+//操作2
+this.demoDao.ddlTx("com.mgfinal.vo.Demo.addDemo", p);
+//提交事务
+this.demoDao.end();
+</code></pre>
+
+<p>2.start,end的事务，放到master主分支中。另外还有一个基于SqlHelper先获取sql,然后conn来commit,rollback的事务支持提交到了v0.1分支。<br>
+3.修改方法名称 executeUpdate -&gt; ddl , executeQuery -&gt; query , executeUpdateWithTx -&gt; ddlTx，只要是简单明了。<br>
+4.添加数据源支持常用数据源支持driud,c3p0等。<br>
+c3p0:<br>
+①添加jar包支持c3p0-0.9.5.1.jar和mchange-commons-java-0.2.10.jar<br>
+②mybatis.xml配置文件中，配置数据源如下</p>
+
+<pre><code>&lt;dataSource type="com.mgfinal.core.mybatis.ds.C3P0DataSourceFactory"&gt;
+    &lt;property name="driverClass" value="${driver}" /&gt;
+    &lt;property name="jdbcUrl" value="${url}" /&gt;
+    &lt;property name="user" value="${username}" /&gt;
+    &lt;property name="password" value="${password}" /&gt;
+    &lt;property name="idleConnectionTestPeriod" value="60" /&gt;
+    &lt;property name="maxPoolSize" value="20" /&gt;
+    &lt;property name="maxIdleTime" value="600" /&gt;
+    &lt;property name="preferredTestQuery" value="SELECT 1" /&gt;
+&lt;/dataSource&gt;
+</code></pre>
+
+<p>driud:<br>
+①添加jar包支持druid-1.0.5.jar<br>
+②mybatis.xml配置文件中，配置数据源如下</p>
+
+<pre><code>&lt;!-- druid数据源 --&gt;
+&lt;dataSource type="com.mgfinal.core.mybatis.ds.DruidDataSourceFactory"&gt;
+    &lt;!-- 基本属性 url、user、password --&gt;  
+    &lt;property name="driver" value="${driver}" /&gt;
+    &lt;property name="url" value="${url}" /&gt;  
+    &lt;property name="username" value="${username}" /&gt;  
+    &lt;property name="password" value="${password}" /&gt;  
+    &lt;!-- 配置初始化大小、最小、最大 --&gt;  
+    &lt;property name="initialSize" value="1" /&gt;  
+    &lt;property name="minIdle" value="1" /&gt;   
+    &lt;property name="maxActive" value="20" /&gt;  
+    &lt;!-- 配置获取连接等待超时的时间 --&gt;  
+    &lt;property name="maxWait" value="60000" /&gt;  
+    &lt;!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 --&gt;  
+    &lt;property name="timeBetweenEvictionRunsMillis" value="60000" /&gt;  
+    &lt;!-- 配置一个连接在池中最小生存的时间，单位是毫秒 --&gt;  
+    &lt;property name="minEvictableIdleTimeMillis" value="300000" /&gt;  
+    &lt;property name="validationQuery" value="SELECT 'x'" /&gt;  
+    &lt;property name="testWhileIdle" value="true" /&gt;  
+    &lt;property name="testOnBorrow" value="false" /&gt;  
+    &lt;property name="testOnReturn" value="false" /&gt;  
+    &lt;!-- 打开PSCache，并且指定每个连接上PSCache的大小 --&gt;  
+    &lt;property name="poolPreparedStatements" value="true" /&gt;  
+    &lt;property name="maxPoolPreparedStatementPerConnectionSize" value="20" /&gt;  
+&lt;/dataSource&gt;
+</code></pre>
+
+<p>5.升级mgwork-ioc-1.2.jar，将日志常用操作丢给mgutil来管理。<br></p>
+
+<h3>
+<a id="2016-5-11" class="anchor" href="#2016-5-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-11</h3>
+
+<p>1.集成mybatisext来完成对象CRUD操作的通用方法实现，包括(save,delete,update,one,list,page,count等);<br></p>
+
+<h3>
+<a id="2016-5-13" class="anchor" href="#2016-5-13" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2016-5-13</h3>
+
+<p>1.集成mgwork-ioc-2.0.jar，使用redis来做ioc容器，默认使用的是redis的0数据库。
+(请升级mgwork-ioc-2.0.jar，欢迎到<a href="http://git.oschina.net/mgang/mgwork%E4%B8%8B%E8%BD%BD">http://git.oschina.net/mgang/mgwork下载</a>)<br></p>
+
+<pre><code>注意点：1.redis存储对象，需要改对象实现Serializable序列化接口。
+        所以service抽象了一层BaseService,目前用做序列化实现。
+        dao的序列化交给了baseDaoImpl来实现。
+        vo,bean的部分，就需要自己手动加上了。
+      2.在mgwork.properties中加上配置ioc容器的redis服务。
+        #redis服务主机
+        mg.ioc.redis.host = localhost
+        #redis服务端口
+        mg.ioc.redis.port = 6379
+</code></pre>
+
+<p>2.使用mybatis-redis.jar工具包，来做mybatis查询缓存，提供查询响应效率。<br>   </p>
+
+<pre><code>注意点：1.加入mybatis-redis-1.0.0-beta2.jar包。
+      2.在要使用查询缓存的mapper中首行加上配置。
+        &lt;!-- redis缓存 --&gt;
+        &lt;cache type="org.mybatis.caches.redis.RedisCache" /&gt;
+      3.可以开启mybatis中的自身缓存（一级），redis就算做2级缓存了。在mybatis.xml主配置文件中
+      加上settings节点如下：
+        &lt;settings&gt;
+            &lt;!-- 这个配置使全局的映射器启用或禁用缓存 --&gt;
+            &lt;setting name="cacheEnabled" value="true" /&gt;
+            &lt;!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 --&gt;
+            &lt;setting name="multipleResultSetsEnabled" value="true" /&gt;
+            &lt;!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新 --&gt;
+            &lt;setting name="defaultExecutorType" value="REUSE" /&gt;
+            &lt;!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 --&gt;
+            &lt;setting name="lazyLoadingEnabled" value="false" /&gt;
+            &lt;setting name="aggressiveLazyLoading" value="true" /&gt;
+            &lt;!-- &lt;setting name="enhancementEnabled" value="true"/&gt; --&gt;
+            &lt;!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。 --&gt;
+            &lt;setting name="defaultStatementTimeout" value="25000" /&gt;
+        &lt;/settings&gt;
+</code></pre>
+
+<p>3.加入mybatis-redis要的配置文件，配置查询缓存连接的redis服务，如下：</p>
+
+<pre><code>#使用redis的第2个数据库来做mybatis查询缓存
+host=localhost
+port=6379
+connectionTimeout=5000
+soTimeout=5000
+password=
+#选择数据库，0被mgwork-ioc占用
+database=1
+clientName=
+</code></pre>
+
+<p>4.使用redis图形客户端查看redis数据库中的key情况：
+<img src="./doc/img/mgfinal-redis-orm.png" alt=""></p>
+
+<p>5.生成mgfinal-1.0版本，导出jar包为mgfinal-1.0.jar。</p>
+
+<p>6.加入mgwork ioc等源码，让mgfinal管理，并调整目录。更改web.xml中mgfinal ioc监听启动配置。</p>
+
+<pre><code>&lt;listener&gt;
+    &lt;listener-class&gt;com.mgfinal.core.ioc.context.IocListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+</code></pre>
+
+<p>7.后续会编写使用手册，有需要，可以收藏，等待手册。</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mg0324/mgfinal">Mgfinal</a> is maintained by <a href="https://github.com/mg0324">mg0324</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
