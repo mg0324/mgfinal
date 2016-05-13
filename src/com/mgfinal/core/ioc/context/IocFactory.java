@@ -1,13 +1,12 @@
 package com.mgfinal.core.ioc.context;
 
 import java.util.Properties;
-import java.util.Set;
 
-import com.alibaba.fastjson.JSONObject;
+import com.mg.log.MgLog;
 import com.mg.util.PropTool;
-import com.mgfinal.core.ioc.util.SerializeUtil;
-
-import redis.clients.jedis.Jedis;
+import com.mgfinal.core.ioc.context.impl.MapIoc;
+import com.mgfinal.core.ioc.context.impl.RedisIoc;
+import com.mgfinal.core.ioc.context.inter.Ioc;
 
 /**
  * ioc工厂 , 单例
@@ -18,14 +17,23 @@ public class IocFactory{
 	/**
 	 * 线程安全加锁,用来存放bean的容器
 	 */
-	//使用redis来做ioc的容器结构
-	//private static Map<String, Object> factory = new HashMap<>();
-	private static Jedis factory;
+	private static Ioc factory;
 	static{
-		Properties prop = PropTool.use("mgwork.properties");
-		String host = prop.getProperty("mg.ioc.redis.host");
-		int port = Integer.parseInt(prop.getProperty("mg.ioc.redis.port"));
-		factory = new Jedis(host, port);
+		Properties prop = PropTool.use("mgfinal.properties");
+		//首先判断mgwork.ioc.type map redis
+		String iocType = prop.getProperty("mgfinal.ioc.type","map");
+		if(iocType.equals("map")){
+			//map容器
+			factory = new MapIoc();
+			MgLog.log.info("mgfinal ioc type is map");
+		}else if(iocType.equals("redis")){
+			//redis容器
+			String host = prop.getProperty("mgfinal.ioc.redis.host","localhost");
+			int port = Integer.parseInt(prop.getProperty("mgfinal.ioc.redis.port","6397"));
+			factory = new RedisIoc(host, port);
+			MgLog.log.info("mgfinal ioc type is redis");
+		}
+		
 	}
 	/**
 	 * 加入factory容器中
@@ -34,7 +42,7 @@ public class IocFactory{
 	 */
 	public static void add(String name, Object newInstance) {
 		synchronized (name) {
-			factory.set(name.getBytes(), SerializeUtil.serialize(newInstance));
+			factory.set(name, newInstance);
 		}
 	}
 	/**
@@ -42,41 +50,20 @@ public class IocFactory{
 	 * @param name id值
 	 */
 	public static Object get(String name){
-		synchronized (name) {
-			Object obj = SerializeUtil.unserialize(factory.get(name.getBytes()));
-			if(obj == null){
-				//未交给mgioc管理的，如mgwork的action是给servlet3.0web.xml容器管理的，不做处理
-				return null;
-			}
-			return obj;
-		}
+		return factory.get(name);
 	}
 	/**
 	 * 返回工厂的json字符串
 	 * @return
 	 */
 	public static String toJsonString(){
-		JSONObject json = new JSONObject();
-		Set<String> keys = factory.keys("*");
-		json.put("size", keys.size());
-		json.put("ioc", keys);
-		return json.toJSONString();
+		return factory.toJsonString();
 	}
 	/**
 	 * 释放factory
 	 */
 	public static void destoryFactory() {
-		factory.flushDB();
-	}
-	
-	/**
-	 * 获取该对象实例从ioc容器中
-	 * @param clazz
-	 * @return
-	 */
-	@SuppressWarnings("rawtypes")
-	public static Object getBean(Class clazz){
-		return SerializeUtil.unserialize(factory.get(clazz.getName().getBytes()));
+		factory.destory();
 	}
 	
 }

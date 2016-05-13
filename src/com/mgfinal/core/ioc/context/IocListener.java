@@ -42,15 +42,15 @@ public class IocListener implements ServletContextListener{
 	private void initMgIoc() {
 		//扫描注解加载到ioc工厂中
 		//System.out.println("扫描注解加载到ioc工厂中");
-		Properties prop = PropTool.use("mgwork.properties");
+		Properties prop = PropTool.use("mgfinal.properties");
 		//未配置就扫描所有package
-		String packageName = prop.getProperty("mgioc.scan.package","");
+		String packageName = prop.getProperty("mgfinal.ioc.scan.package","");
 		List<String> classNames = PackageUtil.getClassName(packageName);
 		for(String className : classNames){
 			injectToBean(className);
 		}
-		MgLog.log.info("mgioc init success.");
-		MgLog.log.info("mgioc --> "+IocFactory.toJsonString());
+		MgLog.log.info("mgfinal ioc init success.");
+		MgLog.log.info("mgfinal ioc --> "+IocFactory.toJsonString());
 	}
 	/**
 	 * 解析ToBean注解

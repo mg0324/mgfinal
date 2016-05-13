@@ -12,7 +12,6 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,23 +59,23 @@ public abstract class MGWorkServlet extends HttpServlet{
 	 */
 	private String MGWORK_WEB_VIEW_TYPE = "jsp";
 	
-	
-	
+	/**
+	 * freemarker配置
+	 */
 	private Configuration cfg;
 	
 	@Override
 	public void init() throws ServletException {
 		cfg = new Configuration();
-		Properties prop = PropTool.use("mgwork.properties");
-		MGWORK_WEBFLOADER_PREFIX = prop.getProperty("mgwork.webfolder.prefix","/WEB-INF/pages");
-		MGWORK_WEB_PAGE_STUFFIX = prop.getProperty("mgwork.web.page.stuffix",".html");
-		MGWORK_WEB_VIEW_TYPE = prop.getProperty("mgwork.web.view.type", "jsp");
+		Properties prop = PropTool.use("mgfinal.properties");
+		MGWORK_WEBFLOADER_PREFIX = prop.getProperty("mgfinal.webfolder.prefix","/WEB-INF/pages");
+		MGWORK_WEB_PAGE_STUFFIX = prop.getProperty("mgfinal.web.page.stuffix",".html");
+		MGWORK_WEB_VIEW_TYPE = prop.getProperty("mgfinal.web.view.type", "jsp");
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.request = request;
 		this.response = response;
@@ -84,7 +83,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		REQUEST_URL = request.getRequestURL().toString();
-		System.out.println(new Date().toLocaleString() + " - " + REQUEST_URL);
+		MgLog.log.info("mgfinal work - " + REQUEST_URL);
 		//设置根目录webroot
 		this.setAttr("ROOT", request.getContextPath());
 		runMethod();
@@ -133,7 +132,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 					String use_class = f.getType().toString().split(" ")[1];//use注解
 					Object use_obj = IocFactory.get(use_class);
 					f.set(obj, use_obj);
-					MgLog.log.info("mgworkioc : className="+this.getClass().getName()+"的"+f.getName()+"属性 <-- 已被注入. ");
+					MgLog.log.info("mgfinal ioc : className="+this.getClass().getName()+"的"+f.getName()+"属性 <-- 已被注入. ");
 					//递归注入
 					injectUseBean(use_obj,use_class);
 				}

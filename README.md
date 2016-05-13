@@ -192,5 +192,12 @@ driud:<br/>
 		<listener-class>com.mgfinal.core.ioc.context.IocListener</listener-class>
 	</listener>
 
-7.后续会编写使用手册，有需要，可以收藏，等待手册。
+###2016-5-14
+1.实现ioc的2中容器,传统的map,和redis。<br/>
+加入Ioc接口，实现MapIoc,RedisIoc容器实现类。<br/>
+
+2.整理mgwork.properties中key,mgwork,ioc都用mgfinal来修饰，并修改mgwok.properties文件为mgfinal.properties。<br/>
+
+3.调整日志输出，mgfinal work,mgfinal ioc前缀。<br/>
+3.后续会编写使用手册，有需要，可以收藏，等待手册。
 
