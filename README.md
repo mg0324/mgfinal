@@ -6,6 +6,8 @@
 	mgutil做日志及常用工具方法管理，
 	致力于打造实用的java后台底层。<br/>
 	适用于中小型应用，及研究框架底层学习爱好者。
+##更新文档
+位置 /doc/mgfinal-1.0使用手册.doc 
 
 ##mgfinal框架源码目录
 ![](./doc/img/mgfinal.png)
