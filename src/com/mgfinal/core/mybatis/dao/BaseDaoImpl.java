@@ -157,6 +157,42 @@ public class BaseDaoImpl<T> extends BaseDao implements Serializable{
 		return rsh.getValue();
 	}
 	/**
+	 * 保存对象
+	 * @param id 带namespace的sql的id
+	 * @param p sql的参数
+	 * @return 结果集
+	 */
+	public int insert(String id,Object p){
+		sqlSession = getSqlSession();
+		int row = sqlSession.insert(id, p);
+		sqlSession.close();
+		return row;
+	}
+	/**
+	 * 删除对象
+	 * @param id 带namespace的sql的id
+	 * @param p sql的参数
+	 * @return 结果集
+	 */
+	public int delete(String id,Object p){
+		sqlSession = getSqlSession();
+		int row = sqlSession.delete(id, p);
+		sqlSession.close();
+		return row;
+	}
+	/**
+	 * 更新对象
+	 * @param id 带namespace的sql的id
+	 * @param p sql的参数
+	 * @return 结果集
+	 */
+	public int update(String id,Object p){
+		sqlSession = getSqlSession();
+		int row = sqlSession.update(id, p);
+		sqlSession.close();
+		return row;
+	}
+	/**
 	 * 通用DDL方法
 	 * @param id 带namespace的sql的id
 	 * @param p sql的参数

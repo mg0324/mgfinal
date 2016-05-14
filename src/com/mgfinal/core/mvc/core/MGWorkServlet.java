@@ -201,8 +201,8 @@ public abstract class MGWorkServlet extends HttpServlet{
 	 * @param c 将表单参数要转成的对象类型，eg User.class
 	 * @return 返回封装好的对象，通过fastjson to object实现
 	 */
-	@SuppressWarnings("unchecked")
-	protected Object mgf2Object(@SuppressWarnings("rawtypes") Class c) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected Object mgf2Object(Class c) {
 		JSONObject json = new JSONObject();
 		Map<String, String[]> p = this.request.getParameterMap();
 		for(String key : p.keySet()){
