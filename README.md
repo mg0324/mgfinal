@@ -7,7 +7,7 @@
 	致力于打造实用的java后台底层。<br/>
 	适用于中小型应用，及研究框架底层学习爱好者。
 ##更新文档
-位置 /doc/mgfinal-1.0使用手册.doc 
+位置 /doc/mgfinal-1.0使用手册.pdf 
 
 ##mgfinal框架源码目录
 ![](./doc/img/mgfinal.png)
