@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.ext_ext.mybatisext.activerecord.DB;
 import com.ext_ext.mybatisext.activerecord.MybatisExt;
-import com.mg.log.MgLog;
+import com.mgfinal.log.MgLog;
 
 /**
  * mgfinal 封裝的mybatis的basedao类

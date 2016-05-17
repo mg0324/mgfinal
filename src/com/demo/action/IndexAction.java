@@ -2,9 +2,9 @@ package com.demo.action;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.mgfinal.core.mvc.core.MGWorkServlet;
+import com.mgfinal.core.mvc.core.BaseAction;
 @WebServlet("/index.do/*")
-public class IndexAction extends MGWorkServlet{
+public class IndexAction extends BaseAction{
 
 	/**
 	 * 

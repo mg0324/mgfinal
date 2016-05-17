@@ -10,9 +10,9 @@ import com.demo.service.DemoService;
 import com.demo.vo.Demo;
 import com.github.pagehelper.PageInfo;
 import com.mgfinal.core.ioc.annotation.UseBean;
-import com.mgfinal.core.mvc.core.MGWorkServlet;
+import com.mgfinal.core.mvc.core.BaseAction;
 @WebServlet("/test.do/*")
-public class TestAction extends MGWorkServlet{
+public class TestAction extends BaseAction{
 	
 	/**
 	 * 

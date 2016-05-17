@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.datasource.DataSourceFactory;
 
-import com.mg.log.MgLog;
+import com.mgfinal.log.MgLog;
 /**
  * mybatis集成druid数据源
  * @author mg

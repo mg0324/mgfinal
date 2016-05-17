@@ -201,5 +201,10 @@ driud:<br/>
 2.整理mgwork.properties中key,mgwork,ioc都用mgfinal来修饰，并修改mgwok.properties文件为mgfinal.properties。<br/>
 
 3.调整日志输出，mgfinal work,mgfinal ioc前缀。<br/>
-3.后续会编写使用手册，有需要，可以收藏，等待手册。
+
+###2016-5-17
+1.完成基本手册并上传。<br/>
+2.考虑到二级缓存应用的业务场景，http://blog.csdn.net/isea533/article/details/44566257文章。这里可以自行选择使用mybatis的二级缓存，
+还是redis的二级缓存，还是最好不使用二级缓存，自己在业务层中缓存。<br/>
+3.给mgfinal的mvc层集成jspsmartupload工具来实现文件上传。<br/>
 

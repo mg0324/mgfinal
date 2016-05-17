@@ -18,21 +18,26 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mg.log.MgLog;
-import com.mg.util.PropTool;
+import com.jspsmart.upload.SmartUpload;
+import com.jspsmart.upload.SmartUploadException;
 import com.mgfinal.core.ioc.annotation.UseBean;
 import com.mgfinal.core.ioc.context.IocFactory;
+import com.mgfinal.log.MgLog;
+import com.mgfinal.utils.PropTool;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 
-public abstract class MGWorkServlet extends HttpServlet{
+public abstract class BaseAction extends BaseWorkServlet{
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * request
@@ -46,18 +51,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 	 * 请求url
 	 */
 	public static String REQUEST_URL;
-	/**
-	 * 网页文件默认前缀/web-inf/pages
-	 */
-	private String MGWORK_WEBFLOADER_PREFIX = "/WEB-INF/pages";
-	/**
-	 * 网页文件后缀，默认.html
-	 */
-	private String MGWORK_WEB_PAGE_STUFFIX = ".html";
-	/**
-	 * 默认视图，jsp
-	 */
-	private String MGWORK_WEB_VIEW_TYPE = "jsp";
+	
 	
 	/**
 	 * freemarker配置
@@ -68,9 +62,12 @@ public abstract class MGWorkServlet extends HttpServlet{
 	public void init() throws ServletException {
 		cfg = new Configuration();
 		Properties prop = PropTool.use("mgfinal.properties");
-		MGWORK_WEBFLOADER_PREFIX = prop.getProperty("mgfinal.webfolder.prefix","/WEB-INF/pages");
-		MGWORK_WEB_PAGE_STUFFIX = prop.getProperty("mgfinal.web.page.stuffix",".html");
-		MGWORK_WEB_VIEW_TYPE = prop.getProperty("mgfinal.web.view.type", "jsp");
+		MGFINAL_WEB_PAGE_STUFFIX = prop.getProperty("mgfinal.webfolder.prefix","/WEB-INF/pages");
+		MGFINAL_WEB_PAGE_STUFFIX = prop.getProperty("mgfinal.web.page.stuffix",".html");
+		MGFINAL_WEB_VIEW_TYPE = prop.getProperty("mgfinal.web.view.type", "jsp");
+		MGFINAL_ALLOW_FILE_SIZE = Integer.parseInt(prop.getProperty("mgfinal.allow.file.size","2"));
+		MGFINAL_ALLOW_TOTAL_FILE_SIZE = Integer.parseInt(prop.getProperty("mgfinal.allow.file.total.size","10"));
+		MGFINAL_ALLOW_FILE_TYPE = prop.getProperty("mgfinal.allow.file.type","*");
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -182,7 +179,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 	 * 渲染模板
 	 */
 	private void handleViewType(String view) {
-		switch (MGWORK_WEB_VIEW_TYPE) {
+		switch (MGFINAL_WEB_VIEW_TYPE) {
 		case "jsp":
 			renderJsp(view);
 			break;
@@ -326,7 +323,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 	protected void renderJsp(String view){
 		//相对路径，绝对路径，后缀支持
 		String tourl = view;
-		if(!view.substring(0,1).equals("/")) tourl = MGWORK_WEBFLOADER_PREFIX + "/" + tourl;
+		if(!view.substring(0,1).equals("/")) tourl = MGFINAL_WEBFLOADER_PREFIX + "/" + tourl;
 		if(!view.contains(".")) tourl = tourl + ".jsp";
 		try {
 			request.getRequestDispatcher(tourl).forward(request,response);
@@ -354,7 +351,7 @@ public abstract class MGWorkServlet extends HttpServlet{
 		//不延迟加载
 		cfg.setTemplateUpdateDelay(0);
 		//设置模板加载目录前缀
-		cfg.setServletContextForTemplateLoading(getServletContext(),MGWORK_WEBFLOADER_PREFIX);
+		cfg.setServletContextForTemplateLoading(getServletContext(),MGFINAL_WEBFLOADER_PREFIX);
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         //设置默认格式化样式
@@ -366,11 +363,11 @@ public abstract class MGWorkServlet extends HttpServlet{
         Writer out = null;
 		try {
 			String tourl = tpl;
-			if(!tpl.contains(".")) tourl = tourl + MGWORK_WEB_PAGE_STUFFIX;
+			if(!tpl.contains(".")) tourl = tourl + MGFINAL_WEB_PAGE_STUFFIX;
 			temp = cfg.getTemplate(tourl);
 			out = new OutputStreamWriter(response.getOutputStream());
 		    temp.process(data, out);
-		    if(!tpl.substring(0,1).equals("/")) tourl = MGWORK_WEBFLOADER_PREFIX + "/" + tourl;
+		    if(!tpl.substring(0,1).equals("/")) tourl = MGFINAL_WEBFLOADER_PREFIX + "/" + tourl;
 			request.getRequestDispatcher(tourl);//跳转，并不转发，转发会出现异常
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -382,5 +379,27 @@ public abstract class MGWorkServlet extends HttpServlet{
 					e.printStackTrace();
 				}
 		}
+	}
+	/**
+	 * 初始化smartupload组件
+	 * 会初始化读取配置的设置，包括允许上传文件类型，单个文件上传大小，总文件上传大小。
+	 * @return
+	 * @throws SmartUploadException 
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * @throws Exception
+	 */
+	protected SmartUpload initSmartUpload() throws ServletException, IOException, SmartUploadException {
+		SmartUpload smart = new SmartUpload();
+		smart.initialize(getServletConfig(), request, response);
+		//单个上传文件大小
+		smart.setMaxFileSize(MGFINAL_ALLOW_FILE_SIZE * 1024 * 1024);
+		//总上传文件大小
+		smart.setTotalMaxFileSize(MGFINAL_ALLOW_TOTAL_FILE_SIZE * 1024 * 1024);
+		//允许上传文件类型
+		if(!MGFINAL_ALLOW_FILE_TYPE.equals("*")) smart.setAllowedFilesList(MGFINAL_ALLOW_FILE_TYPE);
+		//开始上传设置
+		smart.upload();
+		return smart;
 	}
 }

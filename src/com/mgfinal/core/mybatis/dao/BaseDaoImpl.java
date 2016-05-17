@@ -12,10 +12,10 @@ import org.apache.ibatis.session.SqlSession;
 import com.ext_ext.mybatisext.activerecord.Table;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mg.log.MgLog;
 import com.mgfinal.core.mybatis.ResultSetHandler;
 import com.mgfinal.core.mybatis.RowHandler;
 import com.mgfinal.core.mybatis.StringHandler;
+import com.mgfinal.log.MgLog;
 
 /**
  * 实现basedao的实现类，提供常用的dao层方法

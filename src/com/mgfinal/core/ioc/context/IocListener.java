@@ -7,10 +7,10 @@ import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.mg.log.MgLog;
-import com.mg.util.PackageUtil;
-import com.mg.util.PropTool;
 import com.mgfinal.core.ioc.annotation.ToBean;
+import com.mgfinal.log.MgLog;
+import com.mgfinal.utils.PackageTool;
+import com.mgfinal.utils.PropTool;
 
 /**
  * ioc监听，随web.xml启动 , 单例
@@ -45,7 +45,7 @@ public class IocListener implements ServletContextListener{
 		Properties prop = PropTool.use("mgfinal.properties");
 		//未配置就扫描所有package
 		String packageName = prop.getProperty("mgfinal.ioc.scan.package","");
-		List<String> classNames = PackageUtil.getClassName(packageName);
+		List<String> classNames = PackageTool.getClassName(packageName);
 		for(String className : classNames){
 			injectToBean(className);
 		}

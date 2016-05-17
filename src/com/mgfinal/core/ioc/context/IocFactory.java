@@ -2,11 +2,11 @@ package com.mgfinal.core.ioc.context;
 
 import java.util.Properties;
 
-import com.mg.log.MgLog;
-import com.mg.util.PropTool;
 import com.mgfinal.core.ioc.context.impl.MapIoc;
 import com.mgfinal.core.ioc.context.impl.RedisIoc;
 import com.mgfinal.core.ioc.context.inter.Ioc;
+import com.mgfinal.log.MgLog;
+import com.mgfinal.utils.PropTool;
 
 /**
  * ioc工厂 , 单例
