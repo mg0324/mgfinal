@@ -160,7 +160,7 @@ public abstract class BaseAction extends BaseWorkServlet{
 			try {
 				PrintWriter out = response.getWriter();
 				String errorHtml = "<head><meta charset='utf-8'/><title>404</title></head><h2><center>404</center></h2>"
-						+ "<hr/><center>您输入的请求有误，无法访问到资源，请重新输入!!<br/>shared by <a href='https://github.com/mg0324/mgwork'>mgwork1.0</a></center>";
+						+ "<hr/><center>您输入的请求有误，无法访问到资源，请重新输入!!<br/>shared by <a href='http://git.oschina.net/mgang/mgfinal'>mgfinal1.0</a></center>";
 				out.print(errorHtml);
 				out.close();
 			} catch (IOException e) {
