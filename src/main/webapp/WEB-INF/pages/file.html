@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8"/>
+<title>file文件操作</title>
+<#include "lib.html">
+<body>
+	<fieldset style="width:50%;">
+		<legend>已上传文件</legend>
+		<#list files as file>
+			<a href="javascript:void(0);" onclick=downloadFile('${file.name}')>${file.name}</a><br/>
+		</#list>
+	</fieldset>
+	<fieldset style="width:50%;">
+		<legend>文件上传</legend>
+		<form action="${ROOT}/file.do/upload" method="post" 
+			  enctype="multipart/form-data">
+			文件1：<input type="file" name="file1"><br/>
+			文件2：<input type="file" name="file2"><br/>
+			文件3：<input type="file" name="file3"><br/>
+			<button type="submit">上传</button><br/>
+		</form>
+	</fieldset>
+<script type="text/javascript">
+(function(){
+	
+})();
+function downloadFile(name){
+	var cmd = new MG.command("${ROOT}/file.do","post");
+	name = encodeURI(encodeURI(name));
+	cmd.setParameter("name",name);
+	//cmd.execute("download");
+	window.location.href = "${ROOT}/file.do/download?name="+name;
+}
+</script>
+</body>
