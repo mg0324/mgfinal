@@ -417,7 +417,12 @@ public abstract class BaseAction extends BaseWorkServlet{
                     this.__form_field_map.put(name, value);
                 }else if(item.getName().length()>0){// 如果为文件域
                     UFile ufile = new UFile();
-                    ufile.setFilename(item.getName());
+                    //注意IE或FireFox中获取的文件名是不一样的，IE中是绝对路径，FireFox,google中只是文件名。
+                    String fname = item.getName();
+                    if(fname.indexOf("\\") != -1){
+                    	fname = fname.substring(fname.lastIndexOf("\\")+1, fname.length());
+                    }
+                    ufile.setFilename(fname);
                     ufile.setInstream(item.getInputStream());
                     ufile.setSize(item.getSize());
                     this.__form_file_map.put(item.getFieldName(), ufile);//文件的话，存的是表单域名 - UFile对象

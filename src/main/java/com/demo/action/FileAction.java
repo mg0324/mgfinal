@@ -6,14 +6,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.alibaba.fastjson.JSONObject;
 import com.demo.vo.MFile;
 import com.mgfinal.core.mvc.core.BaseAction;
-import com.mgfinal.core.mvc.core.file.UFile;
 import com.mgfinal.utils.PathTool;
 @WebServlet("/file.do/*")
 public class FileAction extends BaseAction{
@@ -41,14 +38,12 @@ public class FileAction extends BaseAction{
 		return "file";
 	}
 	
-	public void upload() throws Exception{
+	public String upload() throws Exception{
 		//初始化上传组件
 		this.initFileUpload();
-		Map<String,UFile> f = this.getFiles();
-		UFile ufile = f.get("file1");
-		this.saveFile(ufile,PathTool.getWebRootPath(request)+"/file/");
-		
-		System.out.println(JSONObject.toJSONString(f));
+		//上传所有文件
+		this.saveFiles(PathTool.getWebRootPath(request)+"/file/");
+		return index();
 	}
 	
 	public void download(){
