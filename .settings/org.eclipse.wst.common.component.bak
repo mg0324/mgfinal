@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="mgfinal">
-        <wb-resource deploy-path="/" source-path="/target/mgfinal" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <property name="java-output-path" value="/target/mgfinal/WEB-INF/classes"/>
         <property name="context-root" value=""/>
     </wb-module>

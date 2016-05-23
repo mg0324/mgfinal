@@ -1,6 +1,11 @@
 package com.mgfinal.core.mvc.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServlet;
+
+import com.mgfinal.core.mvc.core.file.UFile;
 /**
  * 抽象最高层servlet
  * @author mg
@@ -38,5 +43,12 @@ public class BaseWorkServlet extends HttpServlet{
 	 * 允许上传的文件了类型，默认无限制
 	 */
 	protected String MGFINAL_ALLOW_FILE_TYPE = "*";
-	
+	/**
+	 * 普通表单信息
+	 */
+	protected Map<String,String> __form_field_map = new HashMap<String,String>();
+	/**
+	 * 文件表单信息
+	 */
+	protected Map<String,UFile> __form_file_map = new HashMap<String,UFile>();
 }

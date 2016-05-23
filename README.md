@@ -211,3 +211,7 @@ driud:<br/>
 还是redis的二级缓存，还是最好不使用二级缓存，自己在业务层中缓存。<br/>
 3.给mgfinal的mvc层集成jspsmartupload工具来实现文件上传。<br/>
 
+###2016-5-23
+1.使用maven来管理mgfinal项目。<br/>
+2.集成commons-fileupload实现文件上传和下载。<br/>
+

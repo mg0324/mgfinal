@@ -1,5 +1,7 @@
 package com.mgfinal.core.mvc.core;
 
+import java.io.File;
+
 /**
  * @author 梅刚 2014-11-3 21:34
  * 
@@ -14,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -21,9 +24,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+
 import com.alibaba.fastjson.JSONObject;
 import com.mgfinal.core.ioc.annotation.UseBean;
 import com.mgfinal.core.ioc.context.IocFactory;
+import com.mgfinal.core.mvc.core.file.UFile;
 import com.mgfinal.log.MgLog;
 import com.mgfinal.utils.PropTool;
 
@@ -377,5 +387,91 @@ public abstract class BaseAction extends BaseWorkServlet{
 					e.printStackTrace();
 				}
 		}
+	}
+	/**
+	 * 初始化fileupload组件，会将表单信息和文件都初始化，可以通过相应的get方法来取得
+	 * @throws FileUploadException
+	 * @throws IOException
+	 */
+	protected void initFileUpload() throws FileUploadException, IOException {
+		this.__form_field_map.clear();
+		this.__form_file_map.clear();
+        if (ServletFileUpload.isMultipartContent(request)){  
+            DiskFileItemFactory factory = new DiskFileItemFactory();  
+            factory.setSizeThreshold(1 * 1024 * 1024);
+            ServletFileUpload sfu = new ServletFileUpload(factory);
+            //设置文件约束
+            //单个文件大小
+            sfu.setFileSizeMax(MGFINAL_ALLOW_FILE_SIZE * 1024 * 1024);
+            //总文件大小
+            sfu.setSizeMax(MGFINAL_ALLOW_TOTAL_FILE_SIZE * 1024 * 1024);
+            sfu.setHeaderEncoding("UTF-8");
+            List<FileItem> files = sfu.parseRequest(request);
+            int len = files.size();
+            for(int i=0;i<len;i++) {
+                FileItem item = files.get(i); // 从集合中获得一个文件流  
+                // 如果是普通表单字段
+                if(item.isFormField()) {
+                    String name = item.getFieldName();// 获得该字段名称
+                    String value = item.getString("utf-8");//获得该字段值
+                    this.__form_field_map.put(name, value);
+                }else if(item.getName().length()>0){// 如果为文件域
+                    UFile ufile = new UFile();
+                    ufile.setFilename(item.getName());
+                    ufile.setInstream(item.getInputStream());
+                    ufile.setSize(item.getSize());
+                    this.__form_file_map.put(item.getFieldName(), ufile);//文件的话，存的是表单域名 - UFile对象
+                }
+            }  
+        }
+	}
+	/**
+	 * 获取普通表单信息
+	 * @return
+	 */
+	protected Map<String,String> getFields(){
+		return this.__form_field_map;
+	}
+	/**
+	 * 获取文件表单信息
+	 * @return
+	 */
+	protected Map<String,UFile> getFiles(){
+		return this.__form_file_map;
+	}
+	/**
+	 * 上传所有文件,必须先初始化fileupload组件，即调用initFileUpload()方法
+	 * @param saveDir 保存目录
+	 * @throws IOException 
+	 */
+	protected void saveFiles(String saveDir) throws IOException{
+		Map<String,UFile> ff = this.getFiles();
+		if(ff.size()>0){
+			for(String key : ff.keySet()){
+				UFile ufile = ff.get(key);
+				this.saveFile(ufile, saveDir);
+			}
+		}
+	}
+	/**
+	 * 保存文件（上传文件）
+	 * @param ufile 上传文件对象
+	 * @param saveDir 保存文件的目录
+	 * @throws IOException 
+	 */
+	protected void saveFile(UFile ufile, String saveDir) throws IOException {
+		File dir = new File(saveDir);
+		if(!dir.exists()) dir.mkdirs();
+		FileUtils.copyInputStreamToFile(ufile.getInstream(), new File(dir,ufile.getFilename()));
+	}
+	/**
+	 * 渲染文件，下载文件
+	 * @param file
+	 * @throws IOException
+	 */
+	protected void renderFile(File file) throws IOException{
+		response.setContentType("application/octet-stream; charset=utf-8");
+        response.setHeader("Content-disposition", "attachment;" + UFile.encodeFileName(request, file.getName()));
+        FileUtils.copyFile(file, response.getOutputStream());
 	}
 }
